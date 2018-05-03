@@ -1,5 +1,19 @@
+const nameList = [
+    'Aaron',
+    'Andy',
+    'Batman',
+    'Betsy',
+    'Boba',
+    'Bonnie',
+    'Clarence',
+    'Daisy',
+    'Elektra',
+    'Flash'
+];
+const phoneBook = require('./phoneBook.json')
+
 // array
-const binarySearch = (array, searchValue) => {
+const binarySearchArr = (array, searchValue) => {
   let middleValue = Math.floor((array.length) / 2);
   if (array[middleValue] == searchValue) {
     return true;
@@ -7,32 +21,16 @@ const binarySearch = (array, searchValue) => {
     return false;
   } else if (array[middleValue] < searchValue) {
     let newArray = array.slice(middleValue)
-    return binarySearch(newArray, searchValue);
+    return binarySearchArr(newArray, searchValue);
   } else {
     let newArray = array.slice(0, middleValue)
-    return binarySearch(newArray, searchValue);
+    return binarySearchArr(newArray, searchValue);
   }
 }
+console.log(binarySearchArr(nameList, 'Flash'));
 
-const nameList = [
-    'Aaron',
-    'Andy',
-    'Batman',
-    'Boba',
-    'Bonnie',
-    'Betsy',
-    'Clarence',
-    'Daisy',
-    'Elektra',
-    'Flash'
-];
-
-console.log(binarySearch(nameList, 'Flash'));
-
-const phoneBook = require('./phoneBook.json')
-
-// search by id
-const binarySearch = (arrObj, searchValue) => {
+// search by id recursion
+const binarySearchIdRecur = (arrObj, searchValue) => {
   let middleValue = Math.floor((arrObj.length) / 2);
   if (arrObj[middleValue].id == searchValue) {
     return arrObj[middleValue];
@@ -40,16 +38,34 @@ const binarySearch = (arrObj, searchValue) => {
     return false;
   } else if (arrObj[middleValue].id < searchValue) {
     let newArray = arrObj.slice(middleValue)
-    return binarySearch(newArray, searchValue);
+    return binarySearchIdRecur(newArray, searchValue);
   } else {
     let newArray = arrObj.slice(0, middleValue)
-    return binarySearch(newArray, searchValue);
+    return binarySearchIdRecur(newArray, searchValue);
   }
 }
+console.log(binarySearchIdRecur(phoneBook, 503));
 
-console.log(binarySearch(phoneBook, 503));
+// search by id iteration
+const binarySearchIdIter = (arrObj, searchValue) => {
+  firstIndex = 0
+  lastIndex = arrObj.length - 1
+  while (firstIndex <= lastIndex) {
+    
+    let middleValue = firstIndex + Math.floor((lastIndex - firstIndex) / 2);
+    if (arrObj[middleValue].id == searchValue) {
+      return arrObj[middleValue];
+    } else if (arrObj[middleValue].id < searchValue) {
+      firstIndex = middleValue + 1;
+    } else {
+      lastIndex = middleValue - 1;
+    }
+  }
+  return false;
+}
+console.log(binarySearchIdIter(phoneBook, 503));
 
-// search by attr
+// search by attr recursion
 const sortArr = (arrObj, attr) => {
   arrObj.sort((a, b) => {
     if (a[attr] < b[attr]) {
